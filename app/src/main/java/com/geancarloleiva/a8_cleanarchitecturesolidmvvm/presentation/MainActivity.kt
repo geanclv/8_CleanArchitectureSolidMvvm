@@ -1,7 +1,8 @@
-package com.geancarloleiva.a8_cleanarchitecturesolidmvvm
+package com.geancarloleiva.a8_cleanarchitecturesolidmvvm.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.geancarloleiva.a8_cleanarchitecturesolidmvvm.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

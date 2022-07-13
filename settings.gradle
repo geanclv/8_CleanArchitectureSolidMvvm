@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "8_CleanArchitectureSolidMvvm"
 include ':app'
+include ':core'
