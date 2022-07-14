@@ -8,12 +8,12 @@ class NoteRepository(private val dataSource: NoteDataSource) {
         dataSource.add(note)
     }
 
-    suspend fun getNote(id: Long){
-        dataSource.get(id)
+    suspend fun getNote(id: Long): Note? {
+        return dataSource.get(id)
     }
 
-    suspend fun getAllNotes(){
-        dataSource.getAll()
+    suspend fun getAllNotes(): List<Note> {
+        return dataSource.getAll()
     }
 
     suspend fun removeNote(note: Note){
