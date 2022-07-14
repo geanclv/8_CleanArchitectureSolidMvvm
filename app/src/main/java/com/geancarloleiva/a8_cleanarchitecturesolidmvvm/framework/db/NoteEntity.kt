@@ -18,12 +18,12 @@ data class NoteEntity (
 ) {
 
     companion object {
-        fun fromNote(note: Note){
-            NoteEntity(note.title, note.content, note.creationTime, note.updateTime)
+        fun fromNote(note: Note): NoteEntity{
+            return NoteEntity(note.title, note.content, note.creationTime, note.updateTime)
         }
     }
 
-    fun toNote(){
-        Note(title, content, creationTime, updateTime, id)
+    fun toNote(): Note{
+        return Note(title, content, creationTime, updateTime, id)
     }
 }
