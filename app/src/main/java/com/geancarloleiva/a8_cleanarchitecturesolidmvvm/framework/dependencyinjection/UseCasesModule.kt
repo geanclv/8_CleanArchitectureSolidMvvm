@@ -2,10 +2,7 @@ package com.geancarloleiva.a8_cleanarchitecturesolidmvvm.framework.dependencyinj
 
 import com.geancarloleiva.a8_cleanarchitecturesolidmvvm.framework.UseCases
 import com.geancarloleiva.core.repository.NoteRepository
-import com.geancarloleiva.core.usecase.AddNote
-import com.geancarloleiva.core.usecase.GetAllNotes
-import com.geancarloleiva.core.usecase.GetNote
-import com.geancarloleiva.core.usecase.RemoveNote
+import com.geancarloleiva.core.usecase.*
 import dagger.Module
 import dagger.Provides
 
@@ -18,7 +15,8 @@ class UseCasesModule {
             AddNote(repository),
             GetNote(repository),
             GetAllNotes(repository),
-            RemoveNote(repository)
+            RemoveNote(repository),
+            GetWordCount() //No needs repository because it uses the data from note itself
         )
     }
 }

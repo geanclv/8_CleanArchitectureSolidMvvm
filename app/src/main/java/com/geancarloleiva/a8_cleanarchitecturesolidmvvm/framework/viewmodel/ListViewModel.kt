@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ListViewModel(application: Application): AndroidViewModel(application) {
+class ListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -32,17 +32,20 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     )*/
     @Inject
     lateinit var useCases: UseCases
-    init{
+
+    init {
         DaggerViewModelComponent.builder()
             .applicationModule(ApplicationModule(getApplication()))
             .build()
             .inject(this)
     }
+
     val lstNotes = MutableLiveData<List<Note>>()
 
-    fun getNotes(){
+    fun getNotes() {
         coroutineScope.launch {
             val notes: List<Note> = useCases.getAllNotes.invoke()
+            notes.forEach { it.wordCount = useCases.getWordCount.invoke(it) }
             lstNotes.postValue(notes)
         }
     }
