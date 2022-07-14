@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,9 +22,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NoteFragment : Fragment() {
 
+    private var noteId = 0L
     private lateinit var btnCreateNote: FloatingActionButton
     private lateinit var viewModel: NoteViewModel
     private var currentNote = Note("", "", 0L, 0L)
+
+    private lateinit var txtTitle: EditText
+    private lateinit var txtDetail: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,10 +42,18 @@ class NoteFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
+        arguments?.let {
+            noteId = NoteFragmentArgs.fromBundle(it).noteId
+        }
+
+        if(noteId != 0L){
+            viewModel.getNoteById(noteId)
+        }
+
+        txtTitle = view.findViewById(R.id.txtTitle)
+        txtDetail = view.findViewById(R.id.txtDetail)
         btnCreateNote = view.findViewById(R.id.btnCreateNote)
         btnCreateNote.setOnClickListener{
-            val txtTitle: EditText = view.findViewById(R.id.txtTitle)
-            val txtDetail: EditText = view.findViewById(R.id.txtDetail)
 
             if(txtTitle.text.isNotEmpty() || txtDetail.text.isNotEmpty()){
                 val time = System.currentTimeMillis()
@@ -62,6 +75,7 @@ class NoteFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        //Observing the creation method
         viewModel.saved.observe(viewLifecycleOwner, Observer {
             if(it){
                 Toast.makeText(context, "Note saved", Toast.LENGTH_SHORT).show()
@@ -69,6 +83,15 @@ class NoteFragment : Fragment() {
                 Navigation.findNavController(btnCreateNote).popBackStack()
             } else {
                 Toast.makeText(context, "Error saving the note", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        //Observing the get method
+        viewModel.currentNote.observe(viewLifecycleOwner, Observer { note ->
+            note?.let {
+                currentNote = it
+                txtTitle.setText(it.title)
+                txtDetail.setText(it.content)
             }
         })
     }
