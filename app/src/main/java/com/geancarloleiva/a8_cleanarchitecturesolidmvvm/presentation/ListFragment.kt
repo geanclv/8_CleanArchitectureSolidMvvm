@@ -16,10 +16,10 @@ import com.geancarloleiva.a8_cleanarchitecturesolidmvvm.R
 import com.geancarloleiva.a8_cleanarchitecturesolidmvvm.framework.viewmodel.ListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), ListAction {
 
     private lateinit var rviNotesList: RecyclerView
-    private val noteAdapter: NoteListAdapter = NoteListAdapter(arrayListOf())
+    private val noteAdapter: NoteListAdapter = NoteListAdapter(arrayListOf(), this)
     private lateinit var viewModel: ListViewModel
 
     private lateinit var progressBar: ProgressBar
@@ -69,4 +69,10 @@ class ListFragment : Fragment() {
         val action: NavDirections = ListFragmentDirections.actionGoToNoteFragment(id)
         Navigation.findNavController(rviNotesList).navigate(action)
     }
+
+    override fun onClick(id: Long) {
+        goToNoteDetail(id)
+    }
+
+
 }
