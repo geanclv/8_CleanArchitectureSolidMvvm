@@ -32,6 +32,7 @@ class NoteViewModel(application: Application): AndroidViewModel(application) {
 
     val saved = MutableLiveData<Boolean>()
     val currentNote = MutableLiveData<Note?>()
+    val deleted = MutableLiveData<Boolean>()
 
     fun saveNote(note: Note){
         coroutineScope.launch {
@@ -44,6 +45,13 @@ class NoteViewModel(application: Application): AndroidViewModel(application) {
         coroutineScope.launch {
             val note = useCases.getNote(id)
             currentNote.postValue(note)
+        }
+    }
+
+    fun deleteNote(note: Note){
+        coroutineScope.launch {
+            useCases.removeNote(note)
+            deleted.postValue(true)
         }
     }
 }

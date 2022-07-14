@@ -3,4 +3,6 @@
 
     <string name="lbl_note_title">Title</string>
     <string name="lbl_note_detail">Write your note here...</string>
+
+    <string name="men_delete_note">Delete note</string>
 </resources>
